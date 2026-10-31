@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教育社會學・歷屆試題與非選觀念全解析闖關遊戲</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --text-main: #1e293b;
+      --text-sub: #475569;
+      --bg-body: #f1f5f9;
+      --bg-card: #ffffff;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.65;
+      padding-bottom: 60px;
+    }
+
+    /* Header & Scoreboard */
+    header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #fff;
+      padding: 24px 20px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .progress-wrap {
+      background: rgba(255, 255, 255, 0.25);
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: #38bdf8;
+      height: 100%;
+      width: 0%;
+      transition: width 0.35s ease;
+    }
+
+    /* Controls & Filter Tabs */
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--text-sub);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #bfdbfe;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .action-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      border: none;
+      background: #e2e8f0;
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #cbd5e1;
+    }
+
+    /* Question Card */
+    .q-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      border: 1px solid var(--border);
+      transition: transform 0.2s;
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .q-badge {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .q-status {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .q-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #0f172a;
+    }
+
+    /* Options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      padding: 13px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text-main);
+      font-size: 0.98rem;
+      line-height: 1.5;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .opt-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-label {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: var(--text-sub);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .opt-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .opt-btn.correct .opt-label {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .opt-btn.wrong {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+      color: #991b1b;
+    }
+
+    .opt-btn.wrong .opt-label {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    /* Explanation Box */
+    .exp-box {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border-left: 5px solid var(--primary);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .exp-box.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .exp-header {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stem-analysis {
+      background: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+
+    .opt-exp-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .opt-exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt-exp-item {
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      font-size: 0.93rem;
+    }
+
+    .opt-exp-item.is-correct-opt {
+      border-left: 4px solid var(--success);
+      background: #f0fdf4;
+    }
+
+    .opt-exp-item.is-wrong-opt {
+      border-left: 4px solid #94a3b8;
+    }
+
+    .opt-tag {
+      display: inline-block;
+      font-weight: 700;
+      margin-right: 6px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+
+    .tag-correct {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .tag-wrong {
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    .empty-msg {
+      text-align: center;
+      padding: 48px 20px;
+      background: #fff;
+      border-radius: 14px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="title-row">
+      <h1>🎓 教育社會學・全選項詳解闖關遊戲</h1>
+      <div class="stats-bar">
+        <span class="stat-pill" id="stat-progress">已答：0 / 28</span>
+        <span class="stat-pill" id="stat-score">得分：0 分</span>
+        <span class="stat-pill" id="stat-accuracy">正確率：0%</span>
+        <span class="stat-pill" id="stat-combo">🔥 連對：0</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progress-bar"></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="toolbar">
+    <div class="filter-group" id="filter-tabs">
+      <button class="tab-btn active" onclick="setFilter('all')">全部題目 (28)</button>
+      <button class="tab-btn" onclick="setFilter('115')">115年 (5)</button>
+      <button class="tab-btn" onclick="setFilter('114')">114年 (5)</button>
+      <button class="tab-btn" onclick="setFilter('113')">113年 (5)</button>
+      <button class="tab-btn" onclick="setFilter('112')">112年 (6)</button>
+      <button class="tab-btn" onclick="setFilter('110')">110年 (3)</button>
+      <button class="tab-btn" onclick="setFilter('essay')">非選申論轉化 (4)</button>
+      <button class="tab-btn" onclick="setFilter('wrong')">❌ 錯題本</button>
+    </div>
+    <div class="action-group">
+      <button class="action-btn" onclick="toggleAllExplanations()">📖 展開/收合全部解析</button>
+      <button class="action-btn" onclick="resetGame()">🔄 重新開始</button>
+    </div>
+  </div>
+
+  <div id="quiz-list"></div>
+</div>
+
+<script>
+const questionsData = [
+  // ==================== 第一關：115 年試題 ====================
+  {
+    id: 1,
+    year: "115",
+    code: "第 1 題 (115-10)",
+    question: "潘老師發現學生在網路上聊天時打著「生快」、「社死」等簡語，詢問學生這些簡語的意涵後，恍然大悟說自己真是「LKK」，學生卻反問老師「什麼是 LKK」。下列何種概念較能解釋前述現象？",
+    options: ["世代交替", "世代衝突", "世代發展", "世代差異"],
+    answer: 3,
+    stemExp: "老師與學生因成長的時代背景與接觸的流行文化不同，各自擁有獨特的次文化流行語（「LKK」與「生快、社死」），彼此不熟悉對方的詞彙，但互動過程平和且互相好奇詢問，屬於不同世代間的文化與語言差異。",
+    optExps: [
+      "【世代交替（Generational Replacement）】指隨著時間推移，年輕一代逐漸取代年長一代在社會、政治或職場上的主導地位與角色（如職務交接、人口結構更替）。",
+      "【世代衝突（Generational Conflict）】指不同世代之間因為價值觀、意識形態、權力或資源分配不均，而產生對立、爭執或緊張關係。題幹中師生僅是不懂對方用語，並無對立衝突。",
+      "【世代發展（Generational Development）】指特定世代在生命歷程中隨社會變遷而產生的整體成長與演變趨勢，並非教育社會學用來描述跨世代語言隔閡的專有名詞。",
+      "【世代差異（Generational Gap / Difference）】指不同年齡層（世代）因為成長的歷史脈絡、科技環境與社會化經驗不同，而在價值觀、行為模式、語言符號或生活習慣上呈現出的差別。"
+    ]
+  },
+  {
+    id: 2,
+    year: "115",
+    code: "第 2 題 (115-11)",
+    question: "下課時教師在辦公室跟同事輕鬆互動與談笑風生，上課後到教室隨即展現出嚴肅專業的形象。教師這種轉變較符合高夫曼(E. Goffman)戲劇理論的何種概念？",
+    options: [
+      "神秘化(mystification)",
+      "角色距離(role distance)",
+      "框架分析(frame analysis)",
+      "印象管理(impression management)"
+    ],
+    answer: 3,
+    stemExp: "教師在「後台」（辦公室）放鬆，進入「前台」（教室）面對觀眾（學生）時，刻意控制自己的言行舉止以塑造「嚴肅專業」的特定形象，這正是高夫曼戲劇理論中最核心的「印象管理」。",
+    optExps: [
+      "【神秘化（Mystification）】指表演者刻意與觀眾保持一定的社會距離，隱藏自身的缺點或平凡面，藉此讓觀眾對表演者產生敬畏感與崇拜感（例如早年威權教師讓學生覺得老師無所不知、高不可攀）。",
+      "【角色距離（Role Distance）】指個體在扮演某個社會角色時，刻意表現出與該角色標準期待「保持距離」或「不完全認同」的行為，以展現個人獨立於角色之外的自我（例如：老師在講台上自嘲或開玩笑說「這規定超蠢的，但老師還是得照念」）。",
+      "【框架分析（Frame Analysis）】高夫曼後期提出的概念，指人們在日常生活中用來詮釋、「定義情境」並組織自身經驗的認知結構（框架），決定了人們如何理解「現在正在發生什麼事」。",
+      "【印象管理（Impression Management）】指個體在社會互動中（特別是在前台），透過外貌、言談、表情與舉止的操控，試圖引導並控制他人對自己形成特定印象的過程。"
+    ]
+  },
+  {
+    id: 3,
+    year: "115",
+    code: "第 3 題 (115-12)",
+    question: "校長邀請教師同仁擔任行政職時，傾向找勇於承擔任務且個性圓融的教師來穩定團隊運作。從結構功能論的觀點，具備這種特質的教師主要能發揮何種功能？",
+    options: [
+      "建構符號與意義",
+      "揭露衝突與壓迫",
+      "維持整合與延續",
+      "追求利益極大化"
+    ],
+    answer: 2,
+    stemExp: "結構功能論（Structural Functionalism）強調社會系統的穩定、和諧與均衡。校長找個性圓融、勇於承擔的教師來「穩定團隊運作」，對應帕森斯（T. Parsons）AGIL 模型中的整合（Integration）與模式維持（Latency）。",
+    optExps: [
+      "【建構符號與意義】屬於「解釋論／符號互動論（Symbolic Interactionism）」的核心觀點，強調人們在微觀日常互動中透過符號詮釋並建構社會真實。",
+      "【揭露衝突與壓迫】屬於「衝突論（Conflict Theory）與批判理論（Critical Theory）」的核心觀點，強調揭穿支配階級的意識形態與不平等的權力結構。",
+      "【維持整合與延續】屬於「結構功能論」的核心觀點，認為社會各部門與成員應各司其職、相互協調，以維持系統內部的團結整合（Integration）與文化價值的延續（Pattern Maintenance）。",
+      "【追求利益極大化】屬於「社會交換論（Social Exchange Theory）或理性選擇理論」的觀點，認為人類互動是基於成本效益計算，以最小的代價換取最大的報酬。"
+    ]
+  },
+  {
+    id: 4,
+    year: "115",
+    code: "第 4 題 (115-16)",
+    question: "許多學者發現即使在偏鄉學校投入大量資金更新軟硬體設施，對縮小城鄉學生的學業成就差距仍效果有限。根據《柯爾曼報告》(Coleman Report)的觀點，下列何者為較可能的解釋？",
+    options: [
+      "家庭背景對於學生學業成就的影響程度大於學校資源",
+      "學校擁有相同的硬體設備能縮減學業成就的城鄉差距",
+      "教師差異化教學能力不足是城鄉學業成就落差的主因",
+      "學校文化對學生學業表現的影響高於硬體設備的擴充"
+    ],
+    answer: 0,
+    stemExp: "1966 年美國社會學家柯爾曼（J. Coleman）主持的《教育機會均等報告書》（俗稱柯爾曼報告）指出：學校軟硬體資源的投入對學生學業成就的解釋力極低，學生的「家庭社經背景」與「同儕組成」才是決定學業成就的最主要因素。",
+    optExps: [
+      "【家庭背景影響大於學校資源】符合《柯爾曼報告》的核心結論，說明為何單靠補助偏鄉學校硬體設施仍難以弭平城鄉學業成就差距。",
+      "【相同硬體能縮減城鄉差距】與《柯爾曼報告》的實證結果完全相反；報告指出即便拉平各校硬體設備（輸入均等），學業成就差距依然存在（結果不均等）。",
+      "【教師差異化教學能力不足】強調教師個人教學技巧，這並非《柯爾曼報告》歸納出的城鄉落差主因。",
+      "【學校文化影響高於硬體擴充】此為後來 1970-80 年代「學校效能研究（School Effectiveness Research，如 Rutter 等人）」反駁柯爾曼報告時提出的觀點，而非《柯爾曼報告》本身的論點。"
+    ]
+  },
+  {
+    id: 5,
+    year: "115",
+    code: "第 5 題 (115-17)",
+    question: "張老師認為學校測驗傾向採用特定語言形式與文化經驗，導致不同群體學生的表現呈現系統性差距，因而批評學校測驗看似公平，其實不利於某些學生。張老師的看法較符合下列何種論點？",
+    options: [
+      "教育制度具有篩選與社會化的功能",
+      "教育制度隱含權力關係及階層結構",
+      "教育評量反映個人努力與能力差異",
+      "教育互動形塑學生自我概念與期待"
+    ],
+    answer: 1,
+    stemExp: "張老師指出學校測驗並非中立，而是偏袒特定群體（如中上階級）的語言形式（如伯恩斯坦所言的精密型符碼）與文化經驗（如布迪爾所言的文化資本），這是典型的「衝突論」觀點。",
+    optExps: [
+      "【篩選與社會化功能】屬於「結構功能論」的觀點，認為學校測驗是客觀公正地為社會篩選人才並傳遞共同價值。",
+      "【隱含權力關係及階層結構】屬於「衝突論」的觀點，認為看似客觀中立的考試與課程，實則由優勢階級制訂，隱含著文化霸權與階級再製的權力運作。",
+      "【反映個人努力與能力差異】屬於「功能論／功績主義（Meritocracy）」的觀點，假設測驗完全公平，考不好純粹是個人天賦或努力不足。",
+      "【形塑學生自我概念與期待】屬於「解釋論／符號互動論」（如鏡中自我、比馬龍效應、標籤理論）的觀點，聚焦於微觀的師生互動心理歷程。"
+    ]
+  },
+
+  // ==================== 第二關：114 年試題 ====================
+  {
+    id: 6,
+    year: "114",
+    code: "第 6 題 (114-10)",
+    question: "短影音平臺深受年輕人喜愛，其中各種影片吸引用戶仿效接力創作，許多學生在學校跳起流行舞蹈上傳平臺，形成獨特的文化與身分認同。下列何者最能代表此現象？",
+    options: ["族群文化", "休閒文化", "反學校文化", "青少年次文化"],
+    answer: 3,
+    stemExp: "年輕學生群體透過短影音平臺與流行舞蹈，發展出異於成人主流文化、專屬於同儕年齡層的價值觀、流行語彙與身分認同，此即「青少年次文化」。",
+    optExps: [
+      "【族群文化（Ethnic Culture）】指特定種族或族群（如客家族群、原住民族群）因共同歷史、血緣、語言與宗教信仰而傳承下來的文化體系。",
+      "【休閒文化（Leisure Culture）】泛指社會大眾在工作與課業之餘從事娛樂、休息活動的總稱，未能精準點出題幹中「年輕學生群體建立獨特身分認同」的年齡階層特性。",
+      "【反學校文化（Counter-school Culture）】英國學者威利斯（P. Willis）在《學習做勞工》中提出的概念，指勞工階級學生刻意違抗學校權威、鄙視讀書、抽菸翹課以展現陽剛氣概的文化。題幹學生僅是跳流行舞，並無對抗學校體制。",
+      "【青少年次文化（Youth Subculture）】指青少年群體在同儕互動與流行媒介影響下，發展出獨特的行為模式、審美趣味與歸屬感，藉此與成人世界區隔並獲得同儕認同。"
+    ]
+  },
+  {
+    id: 7,
+    year: "114",
+    code: "第 7 題 (114-11)",
+    question: "根據教育社會學的觀點，下列何者最能反映「功績主義」(meritocracy)所強調的核心理念？",
+    options: [
+      "以考試分數決定升學進路",
+      "特權群體易獲得優勢資源",
+      "依門第關係取得晉升機會",
+      "以抽籤方式確保機會均等"
+    ],
+    answer: 0,
+    stemExp: "功績主義（Meritocracy，又譯才德主義）主張社會地位與教育機會的分配，應該取決於個人的「能力（天賦）＋努力」（即 I + E = M），而非家庭出身，最具體的制度展現就是「憑客觀考試分數升學」。",
+    optExps: [
+      "【以考試分數決定升學進路】體現「憑個人實力與努力表現（成就地位）」來分配教育資源，符合功績主義的核心精神。",
+      "【特權群體易獲得優勢資源】屬於「衝突論／階級再製理論」所批判的社會不平等現象，違背功績主義宣稱的公平競爭。",
+      "【依門第關係取得晉升機會】屬於傳統貴族社會的「歸屬地位（Ascribed Status）」或「庇護性流動」，看重血統與背景而非個人才幹。",
+      "【以抽籤方式確保機會均等】屬於完全隨機的運氣分配，不考慮個人的能力與努力程度，因此不符合「論功行賞」的功績主義。"
+    ]
+  },
+  {
+    id: 8,
+    year: "114",
+    code: "第 8 題 (114-13)",
+    question: "小芳發現，歷史課本上的人物與事件大多集中在社會精英的成就，卻很少提到其他階層的貢獻。她好奇的問老師：「為什麼課本很少介紹市井小民的生活及其對社會的貢獻呢？」小芳的提問，反映出何種課程社會學的概念？",
+    options: [
+      "課程知識是客觀中立的",
+      "課程知識適合所有學生",
+      "課程知識反映普遍性真理",
+      "課程知識經過選擇與排除"
+    ],
+    answer: 3,
+    stemExp: "課程社會學（特別是批判課程論學者如 Apple、Young）強調，教科書的內容從來不是價值中立的，而是阿普爾（M. Apple）所稱的「選擇性傳統（Selective Tradition）」——由掌權者選擇哪些人的知識算數（社會精英），並排除其他弱勢群體（市井小民）的歷史記憶。",
+    optExps: [
+      "【課程知識是客觀中立的】屬於傳統實證主義與功能論對課程的假設，認為教科書只是單純傳遞客觀事實，忽略了背後的意識形態。",
+      "【課程知識適合所有學生】屬於理想化的普遍主義觀點，忽略了單一主流課程往往偏向優勢階級經驗，對弱勢或少數群體學生並不友善。",
+      "【課程知識反映普遍性真理】屬於傳統哲學或本質主義的課程觀，認為知識是超越時空與階級的永恆真理。",
+      "【課程知識經過選擇與排除】屬於「新教育社會學／批判課程社會學」的核心概念，指出「誰的知識最有價值？」是由權力關係決定的，課程是社會選擇與排除後的產物。"
+    ]
+  },
+  {
+    id: 9,
+    year: "114",
+    code: "第 9 題 (114-16)",
+    question: "姜老師發現部分學業名列前茅的學生會集體不到班上課，上課時間從事社團活動。經詢問，該群學生認為：「我們能讀又能玩，比那些乖乖牌酷多了。」下列何者最能描述這群學生的行為？",
+    options: [
+      "權力(power)",
+      "秀異(distinction)",
+      "物化(reification)",
+      "濡化(enculturation)"
+    ],
+    answer: 1,
+    stemExp: "這群頂尖學生不僅成績好，還刻意透過「翹課玩社團依然考高分」的姿態，將自己與「只會死讀書的乖乖牌」劃清界線，展現出更高人一等的品味與優越感。這正是布迪爾（P. Bourdieu）在《秀異》（Distinction）一書中探討的核心概念。",
+    optExps: [
+      "【權力（Power）】韋伯（M. Weber）定義為「在社會關係中，儘管遭遇抵抗，個人仍能貫徹其意志的可能性」。題幹學生是在展現優越感與品味區隔，而非強制支配他人。",
+      "【秀異（Distinction，又譯「區判」）】布迪爾提出的概念，指優勢群體透過特定的生活風格、消費品味或行事作風，刻意展現自己「與眾不同、高人一等」的優越性，藉此與其他群體劃出象徵性的階級界線。",
+      "【物化（Reification）】源於馬克思主義（盧卡奇等人發展），指將「人與人之間的社會關係」或「人類創造出來的抽象概念/制度」，誤認為是「自然界客觀存在的、不可改變的物質實體」，進而受其支配。",
+      "【濡化（Enculturation）】人類學與社會學概念，指個體在成長過程中，自然而然地學習並內化「自己所屬原生文化」的價值觀、規範與生活習慣的過程（相當於本文化的社會化）。"
+    ]
+  },
+  {
+    id: 10,
+    year: "114",
+    code: "第 10 題 (114-17)",
+    question: "研究指出家庭社經地位可能影響其子女選擇學校類型，從而導致教育系統再製社會不平等。下列何者最符合包爾斯(S. Bowles)和金帝斯(H. Gintis)符應理論(correspondence theory)對此現象的解釋？",
+    options: [
+      "教育系統的主要目標在於促進社會流動",
+      "學校的課程設計基於學生的天賦和能力",
+      "教育目的是幫助學生找到合適職業角色",
+      "教育分流區隔並強化不同知識體系價值"
+    ],
+    answer: 3,
+    stemExp: "包爾斯與金帝斯在《資本主義美國的學校教育》中提出「符應理論」，認為學校的社會關係與結構，直接「符應」了資本主義生產體系的社會分工。透過教育分流（如高社經家庭讀學術導向大學、勞工家庭讀技職學校），學校對不同階層學生傳遞不同的知識與人格特質，進而再製階級不平等。",
+    optExps: [
+      "【促進社會流動】屬於「結構功能論」的樂觀看法；符應理論則認為教育是在「阻礙流動、再製階級」。",
+      "【基於學生的天賦和能力】屬於「功能論／功績主義」的看法；符應理論指出分流表面看能力，實際上是依家庭社經階級在篩選。",
+      "【幫助學生找到合適職業角色】屬於「結構功能論」的「選擇與配置（Selection and Allocation）」功能，將社會分工視為和諧合理的安排。",
+      "【教育分流區隔並強化不同知識體系價值】符合「符應理論（衝突論）」，點出學校透過分流制度（Tracking）將不同階級學生導向不同知識體系與未來職位，合法化社會的不平等。"
+    ]
+  },
+
+  // ==================== 第三關：113 年試題 ====================
+  {
+    id: 11,
+    year: "113",
+    code: "第 11 題 (113-10)",
+    question: "阿貴在教師節寫信給國中導師，感謝導師在許多人認為自己是不聰明的小孩時，仍鼓勵自己：「只要願意努力，一定能闖出一片天。」下列何者最接近這位導師的說法？",
+    options: [
+      "功能論(functionalism)",
+      "批判論(critical theory)",
+      "衝突論(conflict theory)",
+      "解釋論(interpretive theory)"
+    ],
+    answer: 0,
+    stemExp: "導師強調「只要個人願意努力，就能透過教育獲得成功、向上流動」，這正是結構功能論與功績主義（Meritocracy）最核心的信念——相信社會是開放且公平的，個人成就取決於後天的努力。",
+    optExps: [
+      "【功能論（Functionalism）】認為教育制度提供公平競爭的管道，只要個人努力向學，就能獲得相應的社會地位與報酬（成就地位取代歸屬地位）。",
+      "【批判論（Critical Theory）】強調揭露社會結構中的意識形態霸權與壓迫，並透過反思與主體「增能賦權（Empowerment）」來改造不公義的社會結構，而非單純要個人順應體制努力打拚。",
+      "【衝突論（Conflict Theory）】認為社會資源由優勢階級壟斷，學校教育是階級再製的工具，單憑個人努力很難突破結構性的階級壁壘。",
+      "【解釋論（Interpretive Theory）】關注微觀日常互動中，行動者如何透過符號、語言來詮釋情境與建構意義，不直接對「努力能否成功」做宏觀制度的價值宣稱。"
+    ]
+  },
+  {
+    id: 12,
+    year: "113",
+    code: "第 12 題 (113-11)",
+    question: "劉同學的父親長年臥病在床，導致家境清寒。他從小自發念書，力爭上游，錄取醫學系公費生，後來成為仁心仁術的醫生。上述現象反映下列哪一種概念？",
+    options: ["轉型正義", "代間流動", "結構流動", "形式平等"],
+    answer: 1,
+    stemExp: "題幹比較的是「父親（清寒家境）」與「劉同學（成為高社經地位的醫生）」兩代之間社會階層的改變，因此屬於「代間流動」（且為向上垂直流動）。",
+    optExps: [
+      "【轉型正義（Transitional Justice）】指國家在民主化轉型後，對過去威權統治時期政府所犯下的違法侵害人權事件，進行真相調查、賠償、平反與制度改革的工程。",
+      "【代間流動（Intergenerational Mobility）】指「父母輩」與「子女輩」兩代之間在社會階級、職業地位上的變動（如清寒家庭之子成為醫生）。",
+      "【結構流動（Structural Mobility）】指因為整體社會經濟結構、產業轉型或人口變遷（如工業化、科技業大爆發），導致大批人同時發生社會階層改變，而非單靠個人努力所致。",
+      "【形式平等（Formal Equality）】指法律或制度上給予所有人一視同仁、完全相同的規定與待遇（立足點表面相同），但不考慮個人家庭起跑點的實質落差。"
+    ]
+  },
+  {
+    id: 13,
+    year: "113",
+    code: "第 13 題 (113-12)",
+    question: "政府針對經濟弱勢學生提供更多學費補助的政策最符合下列何者？",
+    options: ["功績主義", "階級再製", "水平公平", "垂直公平"],
+    answer: 3,
+    stemExp: "針對處境不同（經濟弱勢）的學生，給予差別待遇（更多學費補助），以彌補其先天起跑點的不利，這在教育財政學與教育機會均等概念中稱為「垂直公平」（亦即羅爾斯正義論中的差異原則／積極性差別待遇）。",
+    optExps: [
+      "【功績主義（Meritocracy）】主張依個人的「能力與努力表現（如成績）」來分配獎學金或教育機會，而非依經濟弱勢身分補助。",
+      "【階級再製（Class Reproduction）】指上一代的社會階級優勢或劣勢透過教育原封不動傳遞給下一代；政府補助弱勢學生正是為了「打破」階級再製。",
+      "【水平公平（Horizontal Equity）】指「相同處境者，應給予相同對待」（Equal treatment of equals），例如全體國民不論貧富一律免收國民教育學費。",
+      "【垂直公平（Vertical Equity）】指「不同處境者，應給予不同對待」（Unequal treatment of unequals），針對弱勢或特殊需求者投入更多資源，以達成實質公平。"
+    ]
+  },
+  {
+    id: 14,
+    year: "113",
+    code: "第 14 題 (113-14)",
+    question: "布迪爾(P. Bourdieu)提出多種文化資本形式，其中一種強調個人經後天長期薰陶的修養，如氣質、品味或談吐等特質。此種文化資本形式最符合下列何者？",
+    options: [
+      "身體化形式(embodied state)",
+      "階層化形式(stratified state)",
+      "客體化形式(objectified state)",
+      "制度化形式(institutionalized state)"
+    ],
+    answer: 0,
+    stemExp: "布迪爾將文化資本分為三種形式。其中透過家庭耳濡目染、長期教養而內化成為個人一部分的「氣質、品味、談吐、舉止（即生存心態 Habitus）」，與個人的身體密不可分，稱為「身體化（內化）形式」。",
+    optExps: [
+      "【身體化形式（Embodied State，又譯內化形式）】存在於個人精神與身體中的持久性特質，如優雅的談吐、口音、藝術鑑賞品味與思維習慣，必須花費時間親身涵養，無法瞬間買賣轉讓。",
+      "【階層化形式（Stratified State）】此為干擾選項，布迪爾的文化資本三大分類中並無此項。",
+      "【客體化形式（Objectified State，又譯具體化形式）】物質化、具體可見的文化物品，如家中的藏書、名畫、古典樂器（鋼琴）、百科全書或古董。",
+      "【制度化形式（Institutionalized State）】經過社會正式制度認可並授予的資格證明，最典型的例子就是「學歷文憑」與「專業證照」。"
+    ]
+  },
+  {
+    id: 15,
+    year: "113",
+    code: "第 15 題 (113-17)",
+    question: "某教師的課程實施經常是零碎片段的，且隱含著強制性與約束性，容易抹滅學生的創造力與想像力，使學生欠缺思考、變得順從，在學習中越來越像沒有人性的機器，個體意識變得麻木。以上對學生學習情況之描述最接近何種概念？",
+    options: [
+      "異化(alienation)",
+      "涵化(acculturation)",
+      "濡化(enculturation)",
+      "分化(differentiation)"
+    ],
+    answer: 0,
+    stemExp: "學生在強制、零碎的課程中喪失主體性與創造力，變得像「沒有人性的機器」，學習本該是自我實現的歷程，卻反過來成為壓迫、疏離自我的外在力量，這是馬克思主義與批判教育學中最典型的「異化（疏離）」現象。",
+    optExps: [
+      "【異化（Alienation，又譯疏離）】源於馬克思勞動異化理論。在教育上指學生對學習過程與知識內容失去控制權與意義感，學習變成純粹為了應付外在要求（如考試），導致人喪失主體性、淪為麻木的機器。",
+      "【涵化（Acculturation）】指兩個或多個不同文化群體進行持續的直接接觸後，導致其中一方或雙方的原有文化模式發生改變的過程（如外來移民適應當地文化）。",
+      "【濡化（Enculturation）】指個體在自身所處的原生社會文化中，透過家庭與學校教育，自然習得並內化該文化規範的過程。",
+      "【分化（Differentiation）】結構功能論概念，指隨著社會演進或組織擴大，原本單一的結構分裂為多個具備不同專業功能之次級部門的過程（如學校分科、分流）。"
+    ]
+  },
+
+  // ==================== 第四關：112 年試題 ====================
+  {
+    id: 16,
+    year: "112",
+    code: "第 16 題 (112-9)",
+    question: "在網路化時代，人們可以隨時透過各種網路平台學習知識技能、交換資訊及結識學習夥伴。這樣的情形較接近下列哪一部教育著作的主張？",
+    options: [
+      "伊利希 (I. Illich) 的《非學校化社會》",
+      "格拉塞 (W. Glasser) 的《沒有失敗的學校》",
+      "康茲 (G. S. Counts) 的《學校敢勇於建立新的社會秩序嗎？》",
+      "赫西 (E. D. Hirsch) 的《我們所需要的學校以及為何我們沒有這些學校》"
+    ],
+    answer: 0,
+    stemExp: "伊利希在 1971 年出版《非學校化社會》（Deschooling Society），批判制度化的學校壟斷了學習，並極具前瞻性地提出建立四大「學習網絡（Learning Webs）」，讓想學的人能隨時隨地配對找到學習資源與同好，這與現代網路平台的自主學習完全吻合。",
+    optExps: [
+      "【伊利希《非學校化社會》】主張廢除強制性的制度化學校，建立開放的「學習網絡」（包含教學器物諮詢網、技能交換網、同儕配對網、教育家諮詢網），讓學習回歸自主與生活。",
+      "【格拉塞《沒有失敗的學校》（Schools Without Failure）】心理學家格拉塞基於「現實治療法（Reality Therapy）」所寫，主張改革學校氣氛與評量方式，幫助學生獲得「成功認同（Success Identity）」，而非廢除學校或使用網路平台。",
+      "【康茲《學校敢勇於建立新的社會秩序嗎？》】「社會重建論（Social Reconstructionism）」的經典代表作，呼籲教師與學校應積極介入社會改革，解決經濟大恐慌帶來的不公，建立新的民主社會秩序。",
+      "【赫西《我們所需要的學校以及為何我們沒有這些學校》】「精粹主義（Essentialism）／文化素養論」的代表作，批判進步主義教育導致學生知識空洞，主張學校應傳授全體國民共同的核心知識（Core Knowledge）。"
+    ]
+  },
+  {
+    id: 17,
+    year: "112",
+    code: "第 17 題 (112-13)",
+    question: "原生家庭為勞工階級的孫老師，以自己就是靠讀書向上流動而成為中產階級為例，在課堂中帶領學生了解社會階級與教育的關係。孫老師的信念較符合下列哪一個理論？",
+    options: ["階級衝突論", "結構功能論", "符號互動論", "社會重建論"],
+    answer: 1,
+    stemExp: "孫老師以自身經驗證明「勞工階級只要努力讀書，就能透過學校教育向上流動成為中產階級」，肯定教育具備促進社會垂直流動與公平篩選人才的正向功能，這是典型的「結構功能論」觀點。",
+    optExps: [
+      "【階級衝突論】認為教育是維護資產階級利益、進行「階級再製」的工具，勞工階級極難透過教育翻身（孫老師的例子在衝突論看來只是極少數用來維繫系統合法性的例外）。",
+      "【結構功能論】認為現代社會重視「成就地位」，學校教育是促進社會階層垂直流動（Social Mobility）最主要的公平管道。",
+      "【符號互動論】關注微觀班級內的師生語言、標籤與互動如何影響學生的自我概念，不直接探討宏觀的階級向上流動信念。",
+      "【社會重建論】主張學校課程應以「社會問題」為核心，帶領學生批判並採取行動改造不公義的社會制度，而非單純強調個人讀書翻身。"
+    ]
+  },
+  {
+    id: 18,
+    year: "112",
+    code: "第 18 題 (112-14)",
+    question: "小恩時常跟著父母一同到國家音樂廳參加音樂會，或到美術館觀賞畫作，而他最擅長的才藝就是鋼琴演奏及繪畫，還經常代表學校參加各項音樂或繪畫比賽。小恩累積的經驗最符合下列哪一種資本？",
+    options: ["經濟資本", "象徵資本", "人力資本", "文化資本"],
+    answer: 3,
+    stemExp: "逛美術館、聽古典音樂會、彈鋼琴與繪畫，這些高雅藝術的鑑賞力與才藝修養，正是布迪爾（P. Bourdieu）所定義由家庭傳遞給子女的「文化資本」。",
+    optExps: [
+      "【經濟資本（Economic Capital）】指可直接兌換成金錢的實質財富與物質資產，如現金、股票、房地產等。",
+      "【象徵資本（Symbolic Capital）】指個人所擁有的名聲、威望、榮譽感或社會地位（例如頭銜、尊貴身分），能讓他人自然產生敬重並賦予其合法支配權。",
+      "【人力資本（Human Capital）】經濟學家舒爾茨（T. Schultz）等人提出的概念，指透過教育與職業訓練投資在個人身上的「生產知識、專業技術與健康」，目的是在勞動市場上提高生產力並換取更高薪資。",
+      "【文化資本（Cultural Capital）】布迪爾提出的概念，指個人從家庭背景中繼承並習得的語言習慣、藝術品味、生活風格、文化物品與學歷資格，有助於在學校體制中獲得優勢。"
+    ]
+  },
+  {
+    id: 19,
+    year: "112",
+    code: "第 19 題 (112-16)",
+    question: "張老師進行社會領域教學時，將學生分成小組進行社區探查，蒐集各種資料及各方觀點，探討社區產業、環保、人口和生活品質等方面發展的正、反意見，規劃未來道路闢建的構想，並向地方政府主管機關提出建議書。張老師的作法主要採取下列哪一種理論取向？",
+    options: ["社會效率論", "社會重建論", "社會功能論", "社會和諧論"],
+    answer: 1,
+    stemExp: "張老師不只讓學生在教室讀書，更帶學生深入社區探究真實的環保與產業議題，並實際「規劃構想、向地方政府提出建議書」以促成社會改變，完全體現「社會重建論（Social Reconstructionism）」強調教育應引導學生參與社會改革的精神。",
+    optExps: [
+      "【社會效率論（Social Efficiency）】課程學者博比特（F. Bobbitt）等人主張，認為教育應像工廠生產線一樣講求科學管理與效率，分析成人社會的工作任務來訓練學生，使學生畢業後能無縫填補社會現有的職業空缺（順應現狀而非改造社會）。",
+      "【社會重建論（Social Reconstructionism）】以康茲（Counts）、布拉梅爾德（Brameld）及弗雷勒（Freire）為代表，主張學校應以真實社會議題為核心，培養學生的批判意識與行動力，直接參與並改善社會問題。",
+      "【社會功能論（Social Functionalism）】強調教育在於傳遞既有社會規範與共識，以維持既有社會體系的穩定運作。",
+      "【社會和諧論】強調消弭衝突、維持現狀的安定與秩序，不強調帶領學生向政府提出改革建議。"
+    ]
+  },
+  {
+    id: 20,
+    year: "112",
+    code: "第 20 題 (112-17)",
+    question: "在學校中透過評量與獎懲，將學生的表現排定優劣，區分名次。結構功能論學者認為這種作法屬於下列哪一種功能？",
+    options: ["選擇", "社會化", "分配地位", "建立學習標準"],
+    answer: 0,
+    stemExp: "帕森斯（T. Parsons）在〈班級作為一種社會體系〉中指出，學校具有兩大核心功能：「社會化（Socialization）」與「選擇（Selection）」。題幹描述透過評量考核將學生「排定優劣、區分名次」，正是把不同能力與表現的學生篩選區分開來的「選擇（篩選）」功能。",
+    optExps: [
+      "【選擇（Selection，又稱篩選）】指學校透過考試、評量與分流制度，鑑別學生的能力與成就高低，為未來社會分工體系篩選出不同層級的人才。",
+      "【社會化（Socialization）】指學校傳遞社會共同的價值觀、道德規範與知識技能，使學生內化社會角色期待，成為合格的社會公民。",
+      "【分配地位（Status Allocation）】指個人畢業進入社會後，依據學校篩選出的文憑結果被配置到不同的職業與社會階層。在校內的「排名次、評優劣」屬於前端的「選擇（篩選）」過程。",
+      "【建立學習標準】屬於課程與教學評量的實務手段，並非結構功能論分析學校宏觀社會功能的專門術語。"
+    ]
+  },
+  {
+    id: 21,
+    year: "112",
+    code: "第 21 題 (112-18)",
+    question: "下列敘述何者較能闡述競爭性流動之意涵？",
+    options: [
+      "注重學生社經背景的影響",
+      "能讓努力者得其英才地位",
+      "既有的英才及其代表者控制了英才的選擇權",
+      "傳統世襲制度的社會是競爭性流動社會的代表"
+    ],
+    answer: 1,
+    stemExp: "社會學家特納（R. H. Turner）將教育與社會流動模式分為美國式的「競爭性流動（Contest Mobility）」與英國式的「贊助性流動（Sponsored Mobility）」。競爭性流動就像一場公開賽跑，延緩分流淘汰，讓所有人憑後天努力公平競爭英才地位。",
+    optExps: [
+      "【注重學生社經背景的影響】競爭性流動強調「個人後天努力與實力」，試圖淡化家庭社經背景的決定性。",
+      "【能讓努力者得其英才地位】符合「競爭性流動」的精神，主張英才地位是透過公開、公平的規則，由參賽者憑自身努力爭取而來的獎賞。",
+      "【既有的英才及其代表者控制了英才的選擇權】這是特納所定義的「贊助性流動（Sponsored Mobility，又譯庇護性流動）」，指既有的精英階層提早透過考試挑選少數繼承人，並給予特殊精英教育加以栽培。",
+      "【傳統世襲制度的社會是競爭性流動社會的代表】錯誤。傳統世襲社會屬於封閉的「歸屬地位」體系，幾乎沒有流動；競爭性流動的代表是現代開放的民主社會（特別是以美國教育制度為原型）。"
+    ]
+  },
+
+  // ==================== 第五關：110 年試題 ====================
+  {
+    id: 22,
+    year: "110",
+    code: "第 22 題 (110-13)",
+    question: "下列何者屬於「代內流動」(Intragenerational Mobility)的垂直社會流動？",
+    options: [
+      "富商將公司傳給子女繼承家業",
+      "富商家族經過幾代子孫繼承後逐漸衰敗",
+      "窮苦的勞工努力求學後成為專業的工程師",
+      "窮苦的勞工辛苦地將其子女培養成中產階級"
+    ],
+    answer: 2,
+    stemExp: "「代內流動」又稱「生涯流動」，指「同一個人在其一生職業生涯中」社會階層的變動；「垂直流動」則指階層有上下升降。同一個勞工自己求學變成工程師，屬於同一人一生的向上垂直流動。",
+    optExps: [
+      "【富商將公司傳給子女繼承家業】涉及父母與子女兩代（代間），且階層並未改變（維持富商階級），屬於「代間的階級再製／水平維持」。",
+      "【富商家族經過幾代子孫繼承後逐漸衰敗】涉及好幾代子孫的變遷，屬於「代間流動（Intergenerational Mobility）」中的向下垂直流動。",
+      "【窮苦的勞工努力求學後成為專業的工程師】發生在「同一個人一生中」，且從勞工階級晉升為專業中產階級，屬於「代內流動」的向上垂直流動。",
+      "【窮苦的勞工辛苦地將其子女培養成中產階級】比較勞工父母與中產階級子女兩代，屬於「代間流動」的向上垂直流動。"
+    ]
+  },
+  {
+    id: 23,
+    year: "110",
+    code: "第 23 題 (110-14)",
+    question: "教育和其他社會制度一樣，具有維繫社會生存的目的，透過教育可使社會成員具有共同的觀念、態度及行為。下列何者最能說明這樣的過程？",
+    options: ["社會化", "社會分工", "社會流動", "社會階級"],
+    answer: 0,
+    stemExp: "法國社會學家涂爾幹（É. Durkheim）指出，教育的核心功能就是透過有系統的「社會化（Socialization）」，將社會共同的道德規範、價值觀念與行為模式內化到年輕一代心中，以達成社會整合與生存。",
+    optExps: [
+      "【社會化（Socialization）】指個體學習並內化所屬社會的價值觀、規範、態度與行為模式，從「生物人」轉變為能適應群體生活的「社會人」之歷程。",
+      "【社會分工（Division of Labor）】指社會將生產與服務活動劃分為各種不同的專業職位與角色，讓不同專長的人各司其職、相互依賴（涂爾幹藉此區分機械連帶與有機連帶）。",
+      "【社會流動（Social Mobility）】指個人或群體在社會階層體系中，從一個社會地位移動到另一個社會地位的過程（分垂直、水平、代間、代內流動）。",
+      "【社會階級（Social Class）】指在社會階層化體系中，擁有相似經濟資源、職業地位、權力與生活風格的人群集合體。"
+    ]
+  },
+  {
+    id: 24,
+    year: "110",
+    code: "第 24 題 (110-16)",
+    question: "林教授對教師專業的詮釋是：將教師視為是文化工作者或轉化型知識份子，藉以突顯教師在專業化歷程中有關權力支配、社會控制等社會意涵。這接近下列哪一種論點？",
+    options: ["功能論", "衝突論", "解釋論", "交換論"],
+    answer: 1,
+    stemExp: "「文化工作者（Cultural Workers）」是弗雷勒（P. Freire）的名詞，「轉化型知識份子（Transformative Intellectuals）」則是吉魯（H. Giroux）提出的核心概念。這些批判教育學學者源自廣義的「衝突論（馬克思主義／批判理論傳統）」，關注教育中的權力支配、意識形態霸權與社會控制。",
+    optExps: [
+      "【功能論（Functionalism）】將教師視為社會價值的傳遞者與道德楷模（如涂爾幹視教師為社會道德的代理人），強調維持社會和諧與穩定，不談權力支配與反抗。",
+      "【衝突論（Conflict Theory，含批判理論）】強調分析教育場域中的「權力支配、社會控制與意識形態」，並呼籲教師成為具有批判意識的「轉化型知識份子」，帶領學生覺察並挑戰不平等的社會結構。",
+      "【解釋論（Interpretive Theory）】關注教師與學生在教室日常互動中的角色扮演、生存策略與意義協商，較少觸及宏觀的階級權力支配結構。",
+      "【交換論（Exchange Theory）】從人際互動的「成本與報酬（獎賞與懲罰）」角度，分析師生或同儕間的互惠與權力交換行為。"
+    ]
+  },
+
+  // ==================== 第六關：非選與申論必考觀念轉化題 ====================
+  {
+    id: 25,
+    year: "essay",
+    code: "第 25 題 (114 非選 2 延伸：文化資本與文化雜食)",
+    question: "近代研究發現，上層階級的學生不僅學習「高雅文化」（如古典音樂），還廣泛涉獵「大眾文化」（如流行音樂、動漫），展現出多元跨界的「文化雜食（cultural omnivorousness）」能力。關於「文化資本與文化雜食如何造成階級再製」，下列敘述何者最正確？",
+    options: [
+      "文化雜食代表社會階級界線已經完全消失，所有人擁有相同的文化資本",
+      "學校課程與評量往往偏向上層階級熟悉的高雅文化與多元跨界素養，使優勢學生更易獲得教師肯定與升學優勢",
+      "文化雜食是勞工階級學生用來反抗學校威權的「反學校文化」表現",
+      "文化雜食屬於布迪爾所定義的「經濟資本」，可直接用金錢購買而無須家庭長期薰陶"
+    ],
+    answer: 1,
+    stemExp: "本題改編自 114 年非選第 2 題。探討為何「文化資本」與跨界的「文化雜食（由學者 Richard Peterson 提出）」看似模糊階級界線，實則成為更具優勢的文化資本並造成階級再製。",
+    optExps: [
+      "【錯誤原因】「文化雜食」雖然表面上模糊了高雅與通俗的界線，但並未消弭階級界線；相反地，上層階級懂得「何時展現高雅、何時談論通俗」，這種收放自如的跨界能力反而成為新的階級區隔（秀異）標誌，勞工階級則常受限於單一通俗文化（文化單食 Univore）。",
+      "【正確原因（非選擬答重點）】① 文化資本造成再製原因：學校課程、素養命題與多元入學審查（如學習歷程檔案）隱含中上階級文化經驗與精密型符碼，且教師易對具文化資本的學生產生正向期待（標籤作用）；② 為何文化雜食是優勢文化資本：展現極高的跨文化溝通彈性、包容力與社會適應力，在強調跨域整合與團隊領導的升學面試與職場中，更能轉換為社會資本，形成更隱蔽的階級再製。",
+      "【錯誤原因】反學校文化是勞工階級排斥學術知識的次文化；文化雜食則是優勢階級兼收並蓄的文化策略。",
+      "【錯誤原因】文化雜食屬於「身體化（內化）的文化資本」，需要家庭投入大量時間、眼界與資源長期培養，無法瞬間用金錢買斷。"
+    ]
+  },
+  {
+    id: 26,
+    year: "essay",
+    code: "第 26 題 (112 非選 2 延伸：教育的工具性價值 vs. 非工具性價值)",
+    question: "教育價值可分為「工具性價值（Instrumental Value）」與「非工具性價值（Non-instrumental / Intrinsic Value，又稱內在價值）」。下列關於學校教育價值的配對，何者最正確？",
+    options: [
+      "工具性價值：學生在閱讀文學作品時，深刻體會美感經驗與自我心靈的充實",
+      "非工具性價值：學生透過學校教育考取專業證照，畢業後獲得高薪工程師職位",
+      "工具性價值：學校教育為國家培育科技人才，促進整體經濟成長與國際競爭力",
+      "非工具性價值：將教育視為達成升學、就業與賺錢等外在目的之跳板"
+    ],
+    answer: 2,
+    stemExp: "本題改編自 112 年非選第 2 題。核心在於區分「工具性價值（外在價值：把教育當成達成升學、就業、國家經濟發展等外在目的之手段）」與「非工具性價值（內在價值：教育本身即是目的，重在心智啟迪、理性開展、美感體驗與人格完善，如皮德思 R. S. Peters 之主張）」。",
+    optExps: [
+      "【錯誤原因】體會美感經驗與自我心靈充實，不為任何外在功利目的，屬於「非工具性價值（內在價值）」。",
+      "【錯誤原因】為了考取證照、獲得高薪工作，是把教育當成謀生手段，屬於「工具性價值（外在價值）」。",
+      "【正確原因】將學校教育作為培育人力資本、促進國家經濟發展與國際競爭力的外在手段，完全符合「工具性價值」的定義。",
+      "【錯誤原因】把教育當成升學與賺錢的跳板，屬於「工具性價值」而非非工具性價值。"
+    ]
+  },
+  {
+    id: 27,
+    year: "essay",
+    code: "第 27 題 (112 綜合 5 延伸：融合教育中的平等 Equality vs. 公平 Equity)",
+    question: "在推動「融合教育（Inclusive Education）」以達成教育機會均等的目標時，常需區辨「平等（Equality）」與「公平（Equity）」兩種觀點。下列何項作法最能精準區分兩者的差異？",
+    options: [
+      "平等（Equality）強調依身心障礙學生的個別需求提供輔具；公平（Equity）強調所有學生使用完全相同的考卷與作答時間",
+      "平等（Equality）強調保障身心障礙學生與一般生享有相同的普通班入學權利與基本硬體設施；公平（Equity）強調依特教生個別差異提供IEP、抽離式資源班或延長考試時間等支持",
+      "平等（Equality）屬於羅爾斯（J. Rawls）的差異原則；公平（Equity）屬於形式上的齊頭式平等",
+      "平等（Equality）與公平（Equity）在教育社會學中意義完全相同，皆指給予所有學生一模一樣的教材與進度"
+    ],
+    answer: 1,
+    stemExp: "本題改編自 112 年綜合第 5 題。平等（Equality，水平公平／形式平等）強調「一視同仁、相同對待」；公平（Equity，垂直公平／實質公平）則強調「立足點補償、因材施教的差別待遇」。",
+    optExps: [
+      "【錯誤原因】將「平等（Equality）」與「公平（Equity）」的定義與具體作法完全顛倒了。",
+      "【正確原因（非選擬答重點）】完美對應融合教育中「零拒絕、就近入學普通班、共享校園基本資源（Equality 平等）」與「個別化教育計畫 IEP、特殊考場服務、輔具支持與合理調整（Equity 公平）」的雙重實踐。",
+      "【錯誤原因】羅爾斯的「差異原則（積極性差別待遇）」對應的是「公平（Equity）」；形式上的齊頭式平等對應的才是「平等（Equality）」。",
+      "【錯誤原因】兩者意義截然不同，若只給特教生跟一般生一模一樣的教材卻無任何調整支持，反而會造成實質上的不公平。"
+    ]
+  },
+  {
+    id: 28,
+    year: "essay",
+    code: "第 28 題 (111 問答必考 2 延伸：學校教育是否為「錦上添花」的社會制度？)",
+    question: "針對「學校教育是否為『錦上添花』（讓原本優勢者更優勢，而非雪中送炭）的社會制度」一題，若分別從功能論與衝突論提出分析，下列配對何者最正確？",
+    options: [
+      "功能論認為「是錦上添花」，因為學校透過文化霸權再製階級；衝突論認為「不是錦上添花」，因為學校透過功績主義促進向上流動",
+      "功能論認為「不是錦上添花（而是雪中送炭/公平篩選）」，因學校提供客觀功績主義標準與補償教育促進流動；衝突論認為「是錦上添花」，因學校課程符應優勢階級文化資本並透過分流再製不平等",
+      "功能論與衝突論皆認為學校教育「完全是錦上添花」，主張應立即廢除學校制度",
+      "功能論強調從師生微觀的日常語言互動分析標籤效應；衝突論強調教育能維持社會系統的和諧與整合"
+    ],
+    answer: 1,
+    stemExp: "本題改編自 111 年必考問答第 2 題。「錦上添花」意指讓原本家境優勢者更佔優勢。功能論傾向否定此說（認為學校是公平篩選與雪中送炭）；衝突論則強烈肯定此說（認為學校正是替優勢階級錦上添花的再製工具）。",
+    optExps: [
+      "【錯誤原因】將功能論與衝突論對「學校是否錦上添花」的立場與論據完全顛倒了。",
+      "【正確原因（非選擬答重點）】① 功能論（非錦上添花）：A. 功績主義與成就地位（憑個人努力客觀考試促成代間向上流動）；B. 補償教育與垂直公平（透過學費補助、學習扶助為弱勢雪中送炭）。② 衝突論（是錦上添花）：A. 文化資本與語言符碼偏袒（Bourdieu & Bernstein，課程與評量有利中上階級）；B. 符應理論與教育分流（Bowles & Gintis，將優勢生導向管理階層，合法化階級再製）。",
+      "【錯誤原因】功能論肯定學校的正向功能；而主張廢除學校制度的是伊利希（Illich）的激進非學校化論。",
+      "【錯誤原因】從師生微觀語言互動分析標籤效應屬於「解釋論／符號互動論」；強調維持社會系統和諧與整合屬於「功能論」。"
+    ]
+  }
+];
+
+let userAnswers = {}; // { questionId: selectedIndex }
+let currentFilter = 'all';
+let comboCount = 0;
+let allExpanded = false;
+
+function renderQuiz() {
+  const listEl = document.getElementById('quiz-list');
+  listEl.innerHTML = '';
+
+  const filtered = questionsData.filter(q => {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'wrong') {
+      return userAnswers[q.id] !== undefined && userAnswers[q.id] !== q.answer;
+    }
+    return q.year === currentFilter;
+  });
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<div class="empty-msg">🎉 目前此分類沒有題目（或您還沒有答錯任何題目）！</div>`;
+    return;
+  }
+
+  const labels = ['A', 'B', 'C', 'D'];
+
+  filtered.forEach(q => {
+    const answered = userAnswers[q.id] !== undefined;
+    const userChoice = userAnswers[q.id];
+    const isCorrect = userChoice === q.answer;
+
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = `q-card-${q.id}`;
+
+    let statusHtml = '';
+    if (answered) {
+      statusHtml = isCorrect
+        ? `<span class="q-status" style="color:var(--success)">✅ 答對了！</span>`
+        : `<span class="q-status" style="color:var(--danger)">❌ 答錯了（正確答案：${labels[q.answer]}）</span>`;
+    } else {
+      statusHtml = `<span class="q-status" style="color:#94a3b8">尚未作答</span>`;
+    }
+
+    let optionsHtml = q.options.map((optText, idx) => {
+      let btnClass = 'opt-btn';
+      if (answered) {
+        if (idx === q.answer) btnClass += ' correct';
+        else if (idx === userChoice && userChoice !== q.answer) btnClass += ' wrong';
+      }
+      return `
+        <button class="${btnClass}" ${answered ? 'disabled' : ''} onclick="selectOption(${q.id}, ${idx})">
+          <span class="opt-label">${labels[idx]}</span>
+          <span>${optText}</span>
+        </button>
+      `;
+    }).join('');
+
+    let optExpsHtml = q.optExps.map((expText, idx) => {
+      const isRightOpt = idx === q.answer;
+      const itemClass = isRightOpt ? 'opt-exp-item is-correct-opt' : 'opt-exp-item is-wrong-opt';
+      const tagClass = isRightOpt ? 'opt-tag tag-correct' : 'opt-tag tag-wrong';
+      const tagLabel = isRightOpt ? `(${labels[idx]}) 正確選項` : `(${labels[idx]}) 誘答選項解析`;
+      return `
+        <div class="${itemClass}">
+          <span class="${tagClass}">${tagLabel}</span>
+          <span>${expText}</span>
+        </div>
+      `;
+    }).join('');
+
+    const showExpClass = (answered || allExpanded) ? 'exp-box show' : 'exp-box';
+
+    card.innerHTML = `
+      <div class="q-header">
+        <span class="q-badge">${q.code}</span>
+        ${statusHtml}
+      </div>
+      <div class="q-title">${q.question}</div>
+      <div class="options-list">
+        ${optionsHtml}
+      </div>
+      <div class="${showExpClass}" id="exp-${q.id}">
+        <div class="exp-header">💡 答案與四個選項完整解析（正確答案：${labels[q.answer]}）</div>
+        <div class="stem-analysis">
+          <strong>📌 題幹核心解析：</strong>${q.stemExp}
+        </div>
+        <div class="opt-exp-title">🔍 各選項社會學概念與對錯原因：</div>
+        <div class="opt-exp-list">
+          ${optExpsHtml}
+        </div>
+      </div>
+    `;
+
+    listEl.appendChild(card);
+  });
+}
+
+function selectOption(qId, optIdx) {
+  if (userAnswers[qId] !== undefined) return;
+  userAnswers[qId] = optIdx;
+
+  const q = questionsData.find(item => item.id === qId);
+  if (optIdx === q.answer) {
+    comboCount++;
+  } else {
+    comboCount = 0;
+  }
+
+  updateScoreboard();
+  renderQuiz();
+}
+
+function updateScoreboard() {
+  const total = questionsData.length;
+  const answeredKeys = Object.keys(userAnswers);
+  const answeredCount = answeredKeys.length;
+  let correctCount = 0;
+
+  answeredKeys.forEach(k => {
+    const qId = parseInt(k);
+    const q = questionsData.find(item => item.id === qId);
+    if (userAnswers[qId] === q.answer) correctCount++;
+  });
+
+  const score = Math.round((correctCount / total) * 100);
+  const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+  const progressPercent = Math.round((answeredCount / total) * 100);
+
+  document.getElementById('stat-progress').textContent = `已答：${answeredCount} / ${total}`;
+  document.getElementById('stat-score').textContent = `得分：${score} 分`;
+  document.getElementById('stat-accuracy').textContent = `正確率：${accuracy}%`;
+  document.getElementById('stat-combo').textContent = `🔥 連對：${comboCount}`;
+  document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+}
+
+function setFilter(filterKey) {
+  currentFilter = filterKey;
+  const buttons = document.querySelectorAll('#filter-tabs .tab-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderQuiz();
+}
+
+function toggleAllExplanations() {
+  allExpanded = !allExpanded;
+  renderQuiz();
+}
+
+function resetGame() {
+  if (!confirm('確定要清空所有作答紀錄並重新開始嗎？')) return;
+  userAnswers = {};
+  comboCount = 0;
+  allExpanded = false;
+  updateScoreboard();
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 初始化渲染
+renderQuiz();
+updateScoreboard();
+</script>
+
+</body>
+</html>
